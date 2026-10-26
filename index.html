@@ -1,1498 +1,273 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Portfolio | Your Name</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Roboto+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg-color: #f6f6f4;
-        --text-color: #1a1a1a;
-        --text-muted: #555;
-        --accent-blue: #3b82f6;
-        --accent-orange: #d97706;
-        --border-color: #d1d5db;
-        --font-sans: "Inter", sans-serif;
-        --font-serif: "Playfair Display", serif;
-        --font-mono: "Roboto Mono", monospace;
-        --nav-height: 100px;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        font-family: var(--font-sans);
-        line-height: 1.6;
-        overflow-x: hidden;
-      }
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-      h1,
-      h2,
-      h3,
-      h4 {
-        font-family: var(--font-serif);
-        font-weight: 600;
-      }
-      .mono {
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--text-muted);
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-        transition: opacity 0.3s ease;
-      }
-      a:hover {
-        opacity: 0.7;
-      }
-      nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: var(--nav-height);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-      }
-      .logo {
-        font-family: var(--font-mono);
-        font-weight: 600;
-        font-size: 0.95rem;
-        letter-spacing: 0.05em;
-      }
-      .nav-links {
-        display: flex;
-        gap: 32px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-      }
-      .nav-links a:hover {
-        color: var(--text-color);
-      }
-      .mobile-menu-btn {
-        display: none;
-        background: 0 0;
-        border: none;
-        cursor: pointer;
-        color: var(--text-color);
-        padding: 8px;
-      }
-      section {
-        padding: 80px 0;
-        opacity: 0;
-        transform: translateY(30px);
-        transition:
-          opacity 0.8s ease-out,
-          transform 0.8s ease-out;
-      }
-      section.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 40px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        padding-bottom: 24px;
-      }
-      .section-header.no-border {
-        border-bottom: none;
-        padding-bottom: 0;
-        margin-bottom: 30px;
-      }
-      .section-title {
-        font-size: 2.2rem;
-        color: #1a202c;
-      }
-      .tabs {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-      }
-      .tab {
-        padding: 6px 16px;
-        border-radius: 4px;
-        font-size: 0.85rem;
-        font-family: var(--font-mono);
-        cursor: pointer;
-        background: 0 0;
-        border: 1px solid var(--border-color);
-        color: var(--text-muted);
-        transition: all 0.2s ease;
-      }
-      .tab.active {
-        background-color: #1a202c;
-        color: #fff;
-        border-color: #1a202c;
-      }
-      .tab:hover:not(.active) {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-      .hero {
-        position: relative;
-        display: flex;
-        align-items: center;
-        min-height: calc(100vh - var(--nav-height) - 40px);
-        padding: 0;
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .hero-content {
-        width: 55%;
-        padding-right: 40px;
-        z-index: 10;
-        position: relative;
-      }
-      .hero-tagline {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 24px;
-      }
-      .hero-tagline::before {
-        content: "";
-        width: 32px;
-        height: 1px;
-        background-color: var(--text-muted);
-      }
-      .hero-title {
-        font-size: 5rem;
-        line-height: 1;
-        margin-bottom: 32px;
-        color: #1a1a1a;
-        letter-spacing: -0.02em;
-      }
-      .hero-title i {
-        color: #64748b;
-        font-weight: 400;
-      }
-      .hero-desc {
-        font-size: 0.95rem;
-        color: #64748b;
-        max-width: 440px;
-        margin-bottom: 40px;
-        line-height: 1.6;
-      }
-      .hero-buttons {
-        display: flex;
-        gap: 16px;
-        margin-bottom: 48px;
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 24px;
-        border-radius: 9999px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        background-color: #fff;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      .btn-blue {
-        border: 1px solid var(--accent-blue);
-        color: var(--accent-blue);
-      }
-      .btn-blue::before {
-        content: "";
-        width: 6px;
-        height: 6px;
-        background-color: var(--accent-blue);
-        border-radius: 50%;
-      }
-      .btn-blue:hover {
-        background-color: rgba(59, 130, 246, 0.05);
-      }
-      .btn-orange {
-        border: 1px solid var(--accent-orange);
-        color: var(--accent-orange);
-      }
-      .btn-orange::before {
-        content: "";
-        width: 6px;
-        height: 6px;
-        background-color: var(--accent-orange);
-        border-radius: 50%;
-      }
-      .btn-orange:hover {
-        background-color: rgba(217, 119, 6, 0.05);
-      }
-      .hero-links {
-        display: flex;
-        gap: 28px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-      }
-      .hero-links a {
-        text-decoration: underline;
-        text-underline-offset: 6px;
-        text-decoration-thickness: 1.5px;
-        color: #1a1a1a;
-      }
-      .hero-image {
-        position: absolute;
-        right: -10vw;
-        bottom: -5vh;
-        z-index: 1;
-        pointer-events: none;
-      }
-      .hero-image img {
-        height: 95vh;
-        width: auto;
-        max-width: none;
-        max-height: none;
-        mix-blend-mode: darken;
-      }
-      .reveal-text .inner-span {
-        display: inline-block;
-        transform: translateY(100%);
-        opacity: 0;
-        transition:
-          transform 0.8s cubic-bezier(0.2, 1, 0.2, 1),
-          opacity 0.8s ease;
-      }
-      .reveal-text.active .inner-span {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      .fade-up {
-        opacity: 0;
-        transform: translateY(20px);
-        transition:
-          opacity 0.8s ease,
-          transform 0.8s ease;
-      }
-      .fade-up.active {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .delay-1 {
-        transition-delay: 0.1s;
-      }
-      .delay-2 {
-        transition-delay: 0.5s;
-      }
-      .delay-3 {
-        transition-delay: 0.6s;
-      }
-      .delay-4 {
-        transition-delay: 0.7s;
-      }
-      .fade-in-image {
-        opacity: 0;
-        transform: translateY(30px);
-        transition:
-          opacity 1.5s ease 0.4s,
-          transform 1.5s ease 0.4s;
-      }
-      .fade-in-image.active {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .overflow-hidden {
-        overflow: hidden;
-        display: inline-block;
-        vertical-align: top;
-      }
-      .filter-item {
-        animation: fadeIn 0.4s ease forwards;
-      }
-      .filter-item.hidden {
-        display: none;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-      .about-grid {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 60px;
-        align-items: start;
-      }
-      .about-text p {
-        font-size: 1.05rem;
-        color: #333;
-        margin-bottom: 24px;
-        line-height: 1.8;
-      }
-      .about-details {
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-      }
-      .detail-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 16px 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        font-family: var(--font-mono);
-        font-size: 0.85rem;
-      }
-      .detail-label {
-        color: var(--text-muted);
-      }
-      .detail-value {
-        text-align: right;
-        color: var(--text-color);
-      }
-      .skills-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-      }
-      .skill-pill {
-        padding: 10px 24px;
-        background-color: #fff;
-        border-radius: 9999px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #333;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(0, 0, 0, 0.03);
-        transition: all 0.3s ease;
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-        cursor: pointer;
-      }
-      .skill-pill:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        outline: 2px solid #1a202c;
-        outline-offset: 2px;
-      }
-      .work-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-        max-width: 900px;
-        margin: 0 auto;
-        max-height: 900px;
-        overflow-y: auto;
-        padding-right: 16px;
-        padding-bottom: 16px;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
-      }
-      .work-grid::-webkit-scrollbar {
-        width: 8px;
-      }
-      .work-grid::-webkit-scrollbar-track {
-        background: 0 0;
-      }
-      .work-grid::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 4px;
-      }
-      .work-grid::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 0, 0, 0.3);
-      }
-      .work-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid var(--border-color);
-        transition: all 0.3s ease;
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-        cursor: pointer;
-      }
-      .work-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
-        outline: 2px solid var(--accent-blue);
-        outline-offset: 2px;
-      }
-      .work-image {
-        width: 100%;
-        aspect-ratio: 16/9;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        overflow: hidden;
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        padding: 16px;
-        color: var(--text-muted);
-        font-family: var(--font-sans);
-        font-size: 0.9rem;
-        border: 1px solid var(--border-color);
-      }
-      .work-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .work-title {
-        font-size: 1.4rem;
-        margin-bottom: 8px;
-      }
-      .work-desc {
-        color: var(--text-muted);
-        margin-bottom: 24px;
-        font-size: 0.95rem;
-        line-height: 1.6;
-      }
-      .work-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 24px;
-      }
-      .work-tag {
-        font-size: 0.75rem;
-        font-family: var(--font-mono);
-        padding: 4px 10px;
-        background-color: #f3e8ff;
-        color: #7e22ce;
-        border-radius: 4px;
-      }
-      .work-tag.blue {
-        background-color: #e0f2fe;
-        color: #0369a1;
-      }
-      .work-links {
-        display: flex;
-        gap: 16px;
-        font-weight: 600;
-        font-size: 0.9rem;
-      }
-      .work-links a {
-        text-decoration: underline;
-        text-underline-offset: 4px;
-        color: #1a1a1a;
-      }
-      .achievements-wrapper {
-        position: relative;
-      }
-      .achievements-scroll {
-        display: flex;
-        gap: 24px;
-        overflow-x: auto;
-        padding-bottom: 40px;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      }
-      .achievements-scroll::-webkit-scrollbar {
-        display: none;
-      }
-      .achievement-card {
-        min-width: 300px;
-        max-width: 300px;
-        background: #fff;
-        border-radius: 12px;
-        padding: 24px;
-        border: 1px solid var(--border-color);
-        display: flex;
-        flex-direction: column;
-        flex-shrink: 0;
-        transition: all 0.3s ease;
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-        cursor: pointer;
-      }
-      .achievement-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
-        outline: 2px solid #b45309;
-        outline-offset: 2px;
-      }
-      .achievement-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 16px;
-        font-family: var(--font-mono);
-        font-size: 0.8rem;
-        color: #b45309;
-        font-weight: 500;
-        align-items: center;
-      }
-      .achievement-header .number {
-        background-color: rgba(217, 119, 6, 0.15);
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-      }
-      .achievement-image {
-        width: 100%;
-        height: 160px;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        padding: 12px;
-        font-family: var(--font-sans);
-        font-size: 0.9rem;
-        color: #333;
-        border: 1px solid var(--border-color);
-        overflow: hidden;
-      }
-      .achievement-title {
-        font-size: 1.15rem;
-        margin-bottom: 8px;
-        font-family: var(--font-serif);
-        font-weight: 600;
-      }
-      .achievement-subtitle {
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        margin-bottom: 16px;
-      }
-      .achievement-desc {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        margin-bottom: 24px;
-        flex-grow: 1;
-        line-height: 1.6;
-      }
-      .achievement-link {
-        font-weight: 600;
-        font-size: 0.85rem;
-        text-decoration: underline;
-        text-underline-offset: 4px;
-        color: #1a1a1a;
-      }
-      .scroll-controls {
-        display: flex;
-        justify-content: flex-end;
-        gap: 12px;
-        margin-top: -10px;
-        padding-right: 24px;
-      }
-      .scroll-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: 0 0;
-        border: 1px solid var(--border-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        color: #555;
-      }
-      .scroll-btn:hover {
-        background: #fff;
-        color: #1a1a1a;
-        border-color: #1a1a1a;
-      }
-      .scroll-btn svg {
-        width: 14px;
-        height: 14px;
-      }
-      .research-list {
-        display: flex;
-        flex-direction: column;
-      }
-      .research-item {
-        display: grid;
-        grid-template-columns: 1fr;
-        padding: 40px 24px;
-        margin: 0 -24px;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        position: relative;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        outline: 2px solid transparent;
-        outline-offset: -2px;
-        cursor: pointer;
-      }
-      .research-item:last-child {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      }
-      .research-item:hover {
-        outline: 2px solid #b45309;
-        background-color: #fff;
-        border-color: transparent;
-        z-index: 1;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-      }
-      .research-tag-year {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 24px;
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        color: var(--text-muted);
-      }
-      .research-tag {
-        background-color: rgba(217, 119, 6, 0.1);
-        color: #b45309;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-      .research-title {
-        font-size: 1.5rem;
-        margin-bottom: 12px;
-      }
-      .research-desc {
-        color: var(--text-muted);
-        margin-bottom: 16px;
-        font-size: 0.95rem;
-        line-height: 1.6;
-        max-width: 800px;
-      }
-      .research-meta {
-        font-family: var(--font-mono);
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        margin-bottom: 24px;
-      }
-      .research-link {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #b45309;
-        text-decoration: underline;
-        text-underline-offset: 4px;
-      }
-      .contact-section {
-        padding: 100px 0 60px;
-      }
-      .contact-title {
-        font-size: 3rem;
-        margin-bottom: 32px;
-        font-family: var(--font-serif);
-        font-weight: 600;
-      }
-      .contact-desc {
-        font-size: 1.05rem;
-        color: var(--text-muted);
-        max-width: 600px;
-        margin-bottom: 48px;
-        line-height: 1.8;
-      }
-      .contact-links {
-        display: flex;
-        gap: 24px;
-        font-family: var(--font-mono);
-        font-size: 0.9rem;
-        font-weight: 500;
-        margin-bottom: 80px;
-      }
-      .contact-links a {
-        text-decoration: underline;
-        text-underline-offset: 4px;
-        color: var(--text-color);
-      }
-      footer {
-        font-family: var(--font-mono);
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        padding-top: 24px;
-      }
-      @media (max-width: 1200px) {
-        .hero-title {
-          font-size: 4.5rem;
-        }
-        .hero-content {
-          width: 60%;
-        }
-        .hero-image {
-          right: -5vw;
-        }
-      }
-      @media (max-width: 1024px) {
-        .hero-title {
-          font-size: 4rem;
-        }
-        .hero-desc {
-          font-size: 0.9rem;
-          max-width: 400px;
-        }
-        .hero-image img {
-          height: 85vh;
-        }
-        .work-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-      @media (max-width: 768px) {
-        nav {
-          flex-direction: row;
-          justify-content: space-between;
-          height: 70px;
-          padding: 0;
-          position: relative;
-        }
-        .mobile-menu-btn {
-          display: block;
-        }
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          position: absolute;
-          top: 70px;
-          left: -5vw;
-          width: 110vw;
-          background: #fff;
-          padding: 24px;
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-          z-index: 100;
-          gap: 24px;
-          align-items: center;
-        }
-        .nav-links.show {
-          display: flex;
-        }
-        section {
-          padding: 60px 0;
-        }
-        .section-header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 8px;
-          margin-bottom: 32px;
-        }
-        .section-title {
-          font-size: 2.5rem;
-        }
-        .hero {
-          flex-direction: column-reverse;
-          padding-top: 40px;
-          min-height: auto;
-          text-align: center;
-          overflow: hidden;
-        }
-        .hero-content {
-          width: 100%;
-          padding-right: 0;
-        }
-        .hero-tagline {
-          justify-content: center;
-        }
-        .hero-tagline::before {
-          display: none;
-        }
-        .hero-title {
-          font-size: 3.2rem;
-          margin-bottom: 24px;
-        }
-        .hero-desc {
-          margin: 0 auto 32px auto;
-          max-width: 100%;
-        }
-        .hero-buttons {
-          justify-content: center;
-          flex-wrap: wrap;
-          margin-bottom: 32px;
-        }
-        .hero-links {
-          justify-content: center;
-          flex-wrap: wrap;
-          gap: 16px;
-        }
-        .hero-image {
-          position: relative;
-          right: auto;
-          bottom: auto;
-          width: 100%;
-          height: auto;
-          justify-content: center;
-          margin-top: 0;
-          margin-bottom: 24px;
-        }
-        .hero-image img {
-          height: auto;
-          width: 100%;
-          max-width: 400px;
-        }
-        .about-grid {
-          grid-template-columns: 1fr;
-          gap: 40px;
-        }
-        .work-grid {
-          grid-template-columns: 1fr;
-          gap: 32px;
-        }
-        .work-image {
-          height: 200px;
-        }
-        .tabs {
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-        .tab {
-          padding: 6px 16px;
-          font-size: 0.8rem;
-        }
-        .research-item {
-          flex-direction: column;
-          gap: 12px;
-        }
-        .research-meta {
-          width: 100%;
-        }
-        .contact-title {
-          font-size: 2.5rem;
-        }
-        .contact-links {
-          flex-direction: column;
-          gap: 16px;
-          margin-bottom: 60px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <nav>
-        <div class="logo">Royal /</div>
-        <button
-          class="mobile-menu-btn"
-          id="mobile-menu-btn"
-          aria-label="Toggle Menu"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-            stroke="currentColor"
-            stroke-width="2"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-        <div class="nav-links" id="nav-links">
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#work">Work</a>
-          <a href="#achievements">Achievements</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </nav>
-      <section class="hero visible" id="home">
-        <div class="hero-content">
-          <div class="hero-tagline mono fade-up delay-1">
-            <span>COMPUTER SCIENCE &middot; CLASS OF 2026</span>
-          </div>
-          <h1 class="hero-title reveal-text">
-            <span class="overflow-hidden"
-              ><span class="inner-span" style="transition-delay: 0.1s"
-                >S.P.S.Royal</span
-              ></span
-            ><br /><span class="overflow-hidden"
-              ><span class="inner-span" style="transition-delay: 0.3s"
-                ><i>builds &amp;</i></span
-              ></span
-            ><br /><span class="overflow-hidden"
-              ><span class="inner-span" style="transition-delay: 0.5s"
-                ><i>investigates.</i></span
-              ></span
-            >
-          </h1>
-          <p class="hero-desc fade-up delay-2">
-            A CS student working across two tracks &mdash; shipping software and
-            running research. This site is proof for both: replace this line
-            with one sentence on the kind of problems you actually want to work
-            on next.
-          </p>
-          <!-- <div class="hero-buttons fade-up delay-3">
-            <button class="btn btn-blue">4 selected projects</button>
-            <button class="btn btn-orange">2 research threads</button>
-          </div> -->
-          <div class="hero-links fade-up delay-4">
-            <a href="#">Resume (PDF)</a> <a href="#">GitHub</a>
-            <a href="#">Google Scholar</a> <a href="#">Email</a>
-          </div>
-        </div>
-        <div class="hero-image fade-in-image">
-          <img src="static/hero-photo.png" alt="Portrait" />
-        </div>
-      </section>
-      <section id="about">
-        <div class="section-header">
-          <h2 class="section-title">About</h2>
-          <span class="mono">CONTEXT</span>
-        </div>
-        <div class="about-grid">
-          <div class="about-text">
-            <p>
-              Two or three sentences on how you got into CS and what pulls you
-              toward both building and research &mdash; the throughline, not a
-              list of hobbies. Recruiters and advisors are both trying to answer
-              the same question from this paragraph: what do you actually want
-              to do next, and does your work so far support that story.
-            </p>
-            <p>
-              Optional second paragraph: what you're looking for right now
-              &mdash; new grad roles, research positions, PhD programs &mdash;
-              stated plainly so the reader doesn't have to guess.
-            </p>
-          </div>
-          <div class="about-details">
-            <div class="detail-row">
-              <span class="detail-label">School</span>
-              <span class="detail-value">[University], [Year]</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-label">Major</span>
-              <span class="detail-value">Computer Science</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-label">Focus</span>
-              <span class="detail-value">[e.g. Systems / ML]</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-label">Based in</span>
-              <span class="detail-value">[City]</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-label">Open to</span>
-              <span class="detail-value">[New grad / Research / PhD]</span>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="skills">
-        <div class="section-header no-border">
-          <h2 class="section-title">Skills</h2>
-          <span class="mono">TOOLKIT</span>
-        </div>
-        <div class="tabs" id="skills-tabs">
-          <button class="tab active" data-filter="all">All</button>
-          <button class="tab" data-filter="languages">Languages</button>
-          <button class="tab" data-filter="build">Build</button>
-          <button class="tab" data-filter="research">Research</button>
-        </div>
-        <div class="skills-container" id="skills-container">
-          <div class="skill-pill filter-item" data-category="languages">
-            Python
-          </div>
-          <div class="skill-pill filter-item" data-category="languages build">
-            TypeScript
-          </div>
-          <div class="skill-pill filter-item" data-category="languages build">
-            Go
-          </div>
-          <div class="skill-pill filter-item" data-category="languages">
-            C++
-          </div>
-          <div class="skill-pill filter-item" data-category="build">
-            React / Next.js
-          </div>
-          <div class="skill-pill filter-item" data-category="build">
-            Node / PostgreSQL
-          </div>
-          <div class="skill-pill filter-item" data-category="build">Docker</div>
-          <div class="skill-pill filter-item" data-category="build">AWS</div>
-          <div class="skill-pill filter-item" data-category="research">
-            PyTorch
-          </div>
-          <div class="skill-pill filter-item" data-category="research">
-            Statistical analysis
-          </div>
-          <div class="skill-pill filter-item" data-category="research">
-            Experiment design
-          </div>
-          <div class="skill-pill filter-item" data-category="research">
-            LaTeX
-          </div>
-        </div>
-      </section>
-      <section id="work">
-        <div class="section-header no-border">
-          <h2 class="section-title">Selected work</h2>
-          <span class="mono">2024 &mdash; 2026</span>
-        </div>
-        <div class="tabs" id="work-tabs">
-          <button class="tab active" data-filter="all">All</button>
-          <button class="tab" data-filter="python">Python</button>
-          <button class="tab" data-filter="typescript">TypeScript</button>
-          <button class="tab" data-filter="react">React</button>
-          <button class="tab" data-filter="go">Go</button>
-          <button class="tab" data-filter="docker">Docker</button>
-          <button class="tab" data-filter="rust">Rust</button>
-          <button class="tab" data-filter="postgresql">PostgreSQL</button>
-          <button class="tab" data-filter="aws">AWS</button>
-        </div>
-        <div class="work-grid" id="work-container">
-          <div
-            class="work-card filter-item"
-            data-category="python postgresql aws"
-          >
-            <div class="work-image">
-              <img
-                src="https://via.placeholder.com/800x500/f0f0f0/999?text=Project+One+thumbnail"
-                alt="Project 1"
-              />
-            </div>
-            <h3 class="work-title">Project One</h3>
-            <p class="work-desc">
-              One sentence on the problem it solves and the outcome &mdash; not
-              the tech stack. What changed because this exists.
-            </p>
-            <div class="work-tags">
-              <span class="work-tag">Python</span>
-              <span class="work-tag">PostgreSQL</span>
-              <span class="work-tag">AWS</span>
-            </div>
-            <div class="work-links">
-              <a href="#">Live</a> <a href="#">Code</a>
-            </div>
-          </div>
-          <div class="work-card filter-item" data-category="typescript react">
-            <div class="work-image">
-              <img
-                src="https://via.placeholder.com/800x500/f0f0f0/999?text=Project+Two+thumbnail"
-                alt="Project 2"
-              />
-            </div>
-            <h3 class="work-title">Project Two</h3>
-            <p class="work-desc">
-              Same rule: outcome first. Numbers if you have them &mdash; latency
-              reduced, users served, time saved.
-            </p>
-            <div class="work-tags">
-              <span class="work-tag">TypeScript</span>
-              <span class="work-tag">React</span>
-            </div>
-            <div class="work-links">
-              <a href="#">Live</a> <a href="#">Code</a>
-            </div>
-          </div>
-          <div class="work-card filter-item" data-category="go docker">
-            <div class="work-image">
-              <img
-                src="https://via.placeholder.com/800x500/f0f0f0/999?text=Project+Two+thumbnail"
-                alt="Project 3"
-              />
-            </div>
-            <h3 class="work-title">Project Three</h3>
-            <p class="work-desc">
-              Same rule: outcome first. Numbers if you have them &mdash; latency
-              reduced, users served, time saved.
-            </p>
-            <div class="work-tags">
-              <span class="work-tag">Go</span>
-              <span class="work-tag">Docker</span>
-            </div>
-            <div class="work-links">
-              <a href="#">Live</a> <a href="#">Code</a>
-            </div>
-          </div>
-          <div class="work-card filter-item" data-category="rust aws">
-            <div class="work-image">
-              <img
-                src="https://via.placeholder.com/800x500/f0f0f0/999?text=Project+Two+thumbnail"
-                alt="Project 4"
-              />
-            </div>
-            <h3 class="work-title">Project Four</h3>
-            <p class="work-desc">
-              Same rule: outcome first. Numbers if you have them &mdash; latency
-              reduced, users served, time saved.
-            </p>
-            <div class="work-tags">
-              <span class="work-tag">Rust</span>
-              <span class="work-tag blue">AWS</span>
-            </div>
-            <div class="work-links">
-              <a href="#">Live</a> <a href="#">Code</a>
-            </div>
-          </div>
-          <div
-            class="work-card filter-item"
-            data-category="typescript react postgresql"
-          >
-            <div class="work-image">
-              <img
-                src="https://via.placeholder.com/800x500/f0f0f0/999?text=Project+Five+thumbnail"
-                alt="Project 5"
-              />
-            </div>
-            <h3 class="work-title">Project Five</h3>
-            <p class="work-desc">
-              Same rule: outcome first. Numbers if you have them &mdash; latency
-              reduced, users served, time saved.
-            </p>
-            <div class="work-tags">
-              <span class="work-tag">TypeScript</span>
-              <span class="work-tag">React</span>
-              <span class="work-tag">PostgreSQL</span>
-            </div>
-            <div class="work-links">
-              <a href="#">Live</a> <a href="#">Code</a>
-            </div>
-          </div>
-          <div class="work-card filter-item" data-category="python aws docker">
-            <div class="work-image">
-              <img
-                src="https://via.placeholder.com/800x500/f0f0f0/999?text=Project+Six+thumbnail"
-                alt="Project 6"
-              />
-            </div>
-            <h3 class="work-title">Project Six</h3>
-            <p class="work-desc">
-              Same rule: outcome first. Numbers if you have them &mdash; latency
-              reduced, users served, time saved.
-            </p>
-            <div class="work-tags">
-              <span class="work-tag">Python</span>
-              <span class="work-tag blue">AWS</span>
-              <span class="work-tag">Docker</span>
-            </div>
-            <div class="work-links">
-              <a href="#">Live</a> <a href="#">Code</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="achievements">
-        <div class="section-header no-border">
-          <h2 class="section-title">Achievements &amp; certifications</h2>
-          <span class="mono">VERIFIED</span>
-        </div>
-        <div class="tabs" id="achievements-tabs">
-          <button class="tab active" data-filter="all">All</button>
-          <button class="tab" data-filter="certifications">
-            Certifications
-          </button>
-          <button class="tab" data-filter="competitions">Competitions</button>
-          <button class="tab" data-filter="awards">Awards</button>
-        </div>
-        <div class="achievements-wrapper">
-          <div class="achievements-scroll" id="achievements-container">
-            <div
-              class="achievement-card filter-item"
-              data-category="certifications"
-            >
-              <div class="achievement-header">
-                <span class="number">01</span> <span class="year">2026</span>
-              </div>
-              <div class="achievement-image">
-                [Certification name]<br />badge
-              </div>
-              <div style="flex-grow: 1"></div>
-              <a href="#" class="achievement-link">Verify credential &rarr;</a>
-            </div>
-            <div
-              class="achievement-card filter-item"
-              data-category="competitions"
-            >
-              <div class="achievement-header">
-                <span class="number">02</span> <span class="year">2025</span>
-              </div>
-              <div class="achievement-image">
-                [Hackathon / competition placement]<br />image
-              </div>
-              <h3 class="achievement-title">
-                [Hackathon / competition<br />placement]
-              </h3>
-              <div class="achievement-subtitle">[Event name]</div>
-              <p class="achievement-desc">
-                Placement out of how many teams &mdash; the denominator is what
-                makes this credible.
-              </p>
-              <a href="#" class="achievement-link">View writeup &rarr;</a>
-            </div>
-            <div class="achievement-card filter-item" data-category="awards">
-              <div class="achievement-header">
-                <span class="number">03</span> <span class="year">2025</span>
-              </div>
-              <div class="achievement-image">
-                [Scholarship / award]<br />image
-              </div>
-              <h3 class="achievement-title">[Scholarship / award]</h3>
-              <div class="achievement-subtitle">[Granting organization]</div>
-              <p class="achievement-desc">
-                Selection criteria in a phrase &mdash; merit-based, competitive
-                pool size, etc.
-              </p>
-              <a href="#" class="achievement-link">Details &rarr;</a>
-            </div>
-            <div
-              class="achievement-card filter-item"
-              data-category="certifications"
-            >
-              <div class="achievement-header">
-                <span class="number">04</span> <span class="year">2024</span>
-              </div>
-              <div class="achievement-image">
-                [Certification name]<br />badge
-              </div>
-              <h3 class="achievement-title">[Certification name]</h3>
-              <div class="achievement-subtitle">[Issuer]</div>
-              <p class="achievement-desc">
-                Only include if relevant to the role you want next.
-              </p>
-              <a href="#" class="achievement-link">Verify credential &rarr;</a>
-            </div>
-            <div class="achievement-card filter-item" data-category="awards">
-              <div class="achievement-header">
-                <span class="number">05</span> <span class="year">2024</span>
-              </div>
-              <div class="achievement-image">[Another award]<br />image</div>
-              <h3 class="achievement-title">[Another Award]</h3>
-              <div class="achievement-subtitle">[Issuer]</div>
-              <p class="achievement-desc">Brief explanation of the award.</p>
-              <a href="#" class="achievement-link">Verify credential &rarr;</a>
-            </div>
-          </div>
-          <div class="scroll-controls">
-            <button
-              class="scroll-btn"
-              id="scroll-pause"
-              aria-label="Pause Auto-scroll"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </section>
-      <section id="research">
-        <div class="section-header no-border">
-          <h2 class="section-title">Research</h2>
-          <span class="mono">PAPERS &amp; ONGOING WORK</span>
-        </div>
-        <div
-          class="about-grid"
-          style="grid-template-columns: 1fr; margin-bottom: 40px"
-        >
-          <p style="font-size: 1.05rem; color: #333; max-width: 800px">
-            What faculty and labs actually check: the question you asked, the
-            method, and your specific contribution if this was joint work. Link
-            the PDF or arXiv page directly &mdash; don't make them hunt.
-          </p>
-        </div>
-        <div class="research-list">
-          <div class="research-item">
-            <div class="research-tag-year">
-              <span class="research-tag">RESEARCH</span> <span>2026</span>
-            </div>
-            <h3 class="research-title">[Paper / project title]</h3>
-            <p class="research-desc">
-              Venue or advisor, one line on the question you were answering, and
-              one line on your contribution ("led experiments," "designed the
-              evaluation") &mdash; be precise about your role if this was a
-              group project.
-            </p>
-            <div class="research-meta">Under review &mdash; [Venue]</div>
-            <a href="#" class="research-link">Read paper &rarr;</a>
-          </div>
-          <div class="research-item">
-            <div class="research-tag-year">
-              <span class="research-tag">RESEARCH</span> <span>2025</span>
-            </div>
-            <h3 class="research-title">[Thesis / lab project title]</h3>
-            <p class="research-desc">
-              Undergrad thesis, independent study, or RA work. Name the
-              advisor/lab &mdash; it's a credibility signal grad admissions and
-              industry research roles both look for.
-            </p>
-            <div class="research-meta">[Advisor name] Lab</div>
-            <a href="#" class="research-link">Read more &rarr;</a>
-          </div>
-        </div>
-      </section>
-      <section id="contact" class="contact-section">
-        <h2 class="contact-title">Let's talk.</h2>
-        <p class="contact-desc">
-          Open to new grad software roles, research assistantships, and PhD
-          programs starting [term/year]. Fastest way to reach me is email.
-        </p>
-        <div class="contact-links">
-          <a href="mailto:you@email.com">you@email.com</a>
-          <a href="#">GitHub</a> <a href="#">LinkedIn</a>
-          <a href="#">Google Scholar</a>
-        </div>
-        <footer>
-          &copy; 2026 Your Name &mdash; built by hand, not a template.
-        </footer>
-      </section>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Royal Sasanala Spoorthi (royallearner)</title>
+<style>
+  :root {
+    --fg:#1f2328; --muted:#59636e; --link:#0969da; --border:#d1d9e0; --border-soft:#d1d9e0b3;
+    --bg:#ffffff; --bg-subtle:#f6f8fa; --header:#25292e; --tab-active:#fd8c73;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg:#f0f6fc; --muted:#9198a1; --link:#4493f8; --border:#3d444d; --border-soft:#3d444db3;
+      --bg:#0d1117; --bg-subtle:#161b22; --header:#010409; --tab-active:#f78166;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size:14px; color:var(--fg); background:var(--bg); line-height:1.5; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* top bar */
+  .topbar { background: var(--header); color:#f0f6fc; padding: 12px 24px; display:flex; align-items:center; gap:12px; }
+  .topbar .brand { font-weight:600; color:#f0f6fc; }
+  .topbar .sep { color:#9198a1; }
+  .topbar .crumb { color:#9198a1; }
+
+  /* tabs */
+  .tabs { background: var(--bg-subtle); border-bottom:1px solid var(--border); padding: 0 24px; }
+  .tabs-inner { max-width:1280px; margin:0 auto; display:flex; gap:4px; }
+  .tab { background:none; border:0; border-bottom:2px solid transparent; padding:12px 14px; color:var(--fg); font:inherit; cursor:pointer; }
+  .tab.active { border-bottom-color: var(--tab-active); font-weight:600; }
+  .tab .count { background: var(--border); border-radius:999px; padding:0 7px; font-size:12px; margin-left:4px; color:var(--fg); }
+
+  .layout { max-width:1280px; margin:24px auto; padding:0 24px; display:grid; grid-template-columns: 296px 1fr; gap:32px; }
+
+  /* sidebar */
+  .avatar { width:296px; height:296px; max-width:100%; border-radius:50%; background: linear-gradient(135deg,#2b5fd9,#7aa2ff); color:#fff; display:flex; align-items:center; justify-content:center; font-size:96px; font-weight:600; margin-bottom:16px; }
+  @media (max-width: 800px) { .avatar { width:140px; height:140px; font-size:48px; } }
+  .name { font-size:24px; font-weight:600; line-height:1.25; margin:0; }
+  .username { color:var(--muted); font-size:20px; font-weight:300; margin:0 0 16px; }
+  .bio { margin:0 0 16px; }
+  .side-item { color:var(--fg); margin:6px 0; display:flex; gap:8px; align-items:center; }
+  .side-item .ico { width:16px; text-align:center; color:var(--muted); }
+  .side-divider { border:0; border-top:1px solid var(--border-soft); margin:16px 0; }
+  .side-h { font-weight:600; font-size:14px; margin:0 0 8px; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { background:var(--bg-subtle); border:1px solid var(--border); border-radius:2em; padding:2px 10px; font-size:12px; color:var(--fg); }
+
+  /* main */
+  .section-title { font-size:20px; font-weight:600; margin:0 0 16px; }
+  .pinned { display:grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap:16px; margin-bottom:32px; }
+  .pin { border:1px solid var(--border); border-radius:6px; padding:16px; background:var(--bg); }
+  .pin-title { font-weight:600; color:var(--link); margin:0 0 6px; font-size:14px; }
+  .pin p { color:var(--muted); margin:0 0 12px; font-size:12px; }
+  .meta-row { display:flex; gap:16px; font-size:12px; color:var(--muted); align-items:center; }
+  .lang { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+
+  .card-list { border:1px solid var(--border); border-radius:6px; }
+  .entry { padding:16px 20px; border-top:1px solid var(--border); }
+  .entry:first-child { border-top:0; }
+  .entry-title { font-weight:600; margin:0 0 2px; font-size:16px; }
+  .entry-sub { color:var(--muted); font-size:13px; margin:0 0 6px; }
+  .entry ul { margin:6px 0 0; padding-left:20px; color:var(--fg); }
+  .entry li { margin-bottom:4px; }
+
+  .repo-toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; gap:12px; flex-wrap:wrap; }
+  .search { border:1px solid var(--border); background:var(--bg-subtle); border-radius:6px; padding:5px 12px; color:var(--muted); min-width:260px; font:inherit; }
+  .repo { padding:16px 0; border-top:1px solid var(--border); }
+  .repo:first-child { border-top:0; padding-top:0; }
+  .repo-name { font-weight:600; font-size:16px; }
+  .repo-desc { color:var(--muted); margin:4px 0 8px; }
+  .empty { color:var(--muted); font-style:italic; padding:24px 0; border:1px dashed var(--border); border-radius:6px; text-align:center; }
+
+  footer { border-top:1px solid var(--border); margin-top:40px; padding:24px; text-align:center; color:var(--muted); font-size:12px; }
+
+  .panel[hidden] { display:none; }
+
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="brand">Royal Sasanala Spoorthi</span>
+  <span class="sep">/</span>
+  <span class="crumb">portfolio</span>
+</div>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab active" data-target="overview">Overview</button>
+    <button class="tab" data-target="repos">Repositories <span class="count" id="repo-count">0</span></button>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <aside>
+    <div class="avatar">RS</div>
+    <h1 class="name">Royal Sasanala Spoorthi</h1>
+    <p class="username">royallearner</p>
+    <p class="bio">B.Tech CSE student (Minor: Quantum Technologies). Full-stack, AI, and quantum computing.</p>
+    <div class="side-item"><span class="ico">&#9873;</span> Srikakulam, Andhra Pradesh, India</div>
+    <div class="side-item"><span class="ico">&#9993;</span> <a href="mailto:royalalearner@gmail.com">royalalearner@gmail.com</a></div>
+    <div class="side-item"><span class="ico">&#9742;</span> +91-9966800756</div>
+    <div class="side-item"><span class="ico">in</span> <a href="https://linkedin.com/in/royalsasanala">linkedin.com/in/royalsasanala</a></div>
+    <div class="side-item"><span class="ico">&#9671;</span> <a href="https://github.com/royallearner">github.com/royallearner</a></div>
+    <hr class="side-divider">
+    <p class="side-h">Skills</p>
+    <div class="chips">
+      <span class="chip">Python</span><span class="chip">C</span><span class="chip">SQL</span><span class="chip">JavaScript</span><span class="chip">HTML</span><span class="chip">CSS</span>
+      <span class="chip">Django</span><span class="chip">DRF</span><span class="chip">Streamlit</span><span class="chip">Pandas</span><span class="chip">NumPy</span>
+      <span class="chip">Git</span><span class="chip">Render</span><span class="chip">Cloudinary</span><span class="chip">Figma</span><span class="chip">Supabase</span><span class="chip">Qiskit</span>
     </div>
-    <script>
-      const observerOptions = {
-          root: null,
-          rootMargin: "0px",
-          threshold: 0.15,
-        },
-        observer = new IntersectionObserver((e, t) => {
-          e.forEach((e) => {
-            e.isIntersecting &&
-              (e.target.classList.add("visible"), t.unobserve(e.target));
-          });
-        }, observerOptions);
-      function setupFiltering(e, t) {
-        const n = document.getElementById(e),
-          l = document.getElementById(t);
-        if (!n || !l) return;
-        const r = n.querySelectorAll(".tab");
-        (l.querySelectorAll(".filter-item"),
-          r.forEach((e) => {
-            e.addEventListener("click", () => {
-              (r.forEach((e) => e.classList.remove("active")),
-                e.classList.add("active"));
-              const t = e.getAttribute("data-filter");
-              (l.querySelectorAll(".filter-item").forEach((e) => {
-                const n = e.getAttribute("data-category").split(" "),
-                  l = e.classList.contains("is-clone");
-                "all" === t
-                  ? e.classList.remove("hidden")
-                  : l
-                    ? e.classList.add("hidden")
-                    : n.includes(t)
-                      ? e.classList.remove("hidden")
-                      : e.classList.add("hidden");
-              }),
-                l.dispatchEvent(
-                  new CustomEvent("filter-changed", { detail: { filter: t } }),
-                ));
-            });
-          }));
+  </aside>
+
+  <main>
+
+    <section class="panel" id="overview">
+      <h2 class="section-title">Pinned</h2>
+      <div class="pinned">
+        <div class="pin">
+          <p class="pin-title">StudyBud</p>
+          <p>Community discussion platform with email auth, live threads, and media uploads.</p>
+          <div class="meta-row"><span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span><span>Django</span><span>PostgreSQL</span></div>
+        </div>
+        <div class="pin">
+          <p class="pin-title">WT Drive</p>
+          <p>Browser-based coding practice portal for Web Technologies with live feedback.</p>
+          <div class="meta-row"><span class="lang"><span class="dot" style="background:#f1e05a"></span>JavaScript</span><span>Express.js</span><span>SQLite</span></div>
+        </div>
+        <div class="pin">
+          <p class="pin-title">Nexus Connect</p>
+          <p>AI recruitment prototype with Gemini-powered resume parsing and career roadmaps.</p>
+          <div class="meta-row"><span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span><span>Gemini API</span><span>Firebase</span></div>
+        </div>
+        <div class="pin">
+          <p class="pin-title">I&amp;CO Club Website</p>
+          <p>Responsive, mobile-first club landing page with Google Sheets API integration.</p>
+          <div class="meta-row"><span class="lang"><span class="dot" style="background:#f1e05a"></span>JavaScript</span><span>Django</span><span>Sheets API</span></div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Experience</h2>
+      <div class="card-list">
+        <div class="entry">
+          <p class="entry-title">Promotions and Marketing Team Lead, RGUKT AP Qiskit Fall Fest 2025</p>
+          <p class="entry-sub">Student Volunteer | October 2025</p>
+          <ul>
+            <li>Led promotions and marketing for the campus edition. The college event drew 18,000+ registrations out of 32,000 global registrations.</li>
+            <li>Streamlined workflow with the technical team on event platform requirements.</li>
+          </ul>
+        </div>
+        <div class="entry">
+          <p class="entry-title">Executive Board Member, Internships and Career Opportunities (I&amp;CO) Club</p>
+          <p class="entry-sub">RGUKT Srikakulam | April 2025 - Present</p>
+          <ul>
+            <li>Led a recruitment drive managing 50+ candidates through structured evaluation and onboarding.</li>
+            <li>Managed the Half Battery Stall at Udaan and ran the Innovation Hackathon at Eureka 2025.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="margin-top:32px">Education</h2>
+      <div class="card-list">
+        <div class="entry">
+          <p class="entry-title">Rajiv Gandhi University of Knowledge and Technologies (RGUKT), Srikakulam</p>
+          <p class="entry-sub">B.Tech in Computer Science and Engineering, Minor in Quantum Technologies | June 2024 - June 2028 | CGPA 8.78</p>
+        </div>
+        <div class="entry">
+          <p class="entry-title">Pre-University Course (Mathematics, Physics, Chemistry)</p>
+          <p class="entry-sub">July 2022 - May 2024 | CGPA 9.40</p>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="margin-top:32px">Achievements and Certifications</h2>
+      <div class="card-list">
+        <div class="entry"><ul>
+          <li>First Runner-up, Synergy Robotics, Eureka 2025</li>
+          <li>Demonstrated Quantum Teleportation at RadhaSapthami Science Fair 2026</li>
+          <li>Basics of Quantum Information (Credly)</li>
+          <li>Qiskit Global Summer School 2026: Quantum Fundamentals (Credly)</li>
+          <li>Introduction to Quantum Computing: Quantum Algorithms and Qiskit (NPTEL)</li>
+          <li>AI Skills Fest 2026 (Credly)</li>
+          <li>Summer Analytics 25 (Verify)</li>
+          <li>Python Skill Up, GeeksforGeeks (Verify)</li>
+          <li>Python Bootcamp, LetsUpgrade, May 2024</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="panel" id="repos" hidden>
+      <div class="repo-toolbar">
+        <input class="search" type="search" placeholder="Find a repository..." id="repo-search" aria-label="Find a repository">
+      </div>
+      <div class="card-list" id="repo-list"></div>
+    </section>
+
+  </main>
+</div>
+
+<footer>Royal Sasanala Spoorthi | royallearner</footer>
+
+<script>
+  // TODO: add your repositories as { name, description, url, language, languageColor } from
+  // https://github.com/royallearner?tab=repositories
+  const repos = [
+    // { name: "repo-name", description: "What it does", url: "https://github.com/royallearner/repo-name", language: "Python", languageColor: "#3572A5" },
+  ];
+
+  const list = document.getElementById("repo-list");
+  const count = document.getElementById("repo-count");
+  const search = document.getElementById("repo-search");
+
+  function render(filter = "") {
+    list.innerHTML = "";
+    const q = filter.trim().toLowerCase();
+    const shown = repos.filter(r => !q || r.name.toLowerCase().includes(q) || (r.description || "").toLowerCase().includes(q));
+    if (repos.length === 0) {
+      list.innerHTML = '<div class="empty">Repositories will appear here.</div>';
+    } else if (shown.length === 0) {
+      list.innerHTML = '<div class="empty">No repositories match your search.</div>';
+    }
+    shown.forEach(r => {
+      const row = document.createElement("div");
+      row.className = "repo";
+      row.style.padding = "16px 20px";
+
+      const name = document.createElement("a");
+      name.className = "repo-name";
+      name.href = r.url;
+      name.target = "_blank";
+      name.rel = "noopener";
+      name.textContent = r.name;
+
+      const desc = document.createElement("p");
+      desc.className = "repo-desc";
+      desc.textContent = r.description || "";
+
+      const meta = document.createElement("div");
+      meta.className = "meta-row";
+      if (r.language) {
+        const lang = document.createElement("span");
+        lang.className = "lang";
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        dot.style.background = r.languageColor || "#8b949e";
+        lang.append(dot, r.language);
+        meta.appendChild(lang);
       }
-      (document.querySelectorAll("section:not(.hero)").forEach((e) => {
-        observer.observe(e);
-      }),
-        window.addEventListener("load", () => {
-          setTimeout(() => {
-            (document.querySelector(".reveal-text").classList.add("active"),
-              document
-                .querySelectorAll(".fade-up")
-                .forEach((e) => e.classList.add("active")),
-              document.querySelector(".fade-in-image").classList.add("active"));
-          }, 100);
-        }),
-        setupFiltering("skills-tabs", "skills-container"),
-        setupFiltering("work-tabs", "work-container"),
-        setupFiltering("achievements-tabs", "achievements-container"));
-      const scrollContainer = document.getElementById("achievements-container"),
-        scrollPauseBtn = document.getElementById("scroll-pause");
-      if (scrollContainer) {
-        scrollContainer.style.overflowAnchor = "none";
-        const e = Array.from(
-          scrollContainer.querySelectorAll(".achievement-card"),
-        );
-        for (let t = 0; t < 6; t++)
-          e.forEach((e) => {
-            const t = e.cloneNode(!0);
-            (t.classList.add("is-clone"), scrollContainer.appendChild(t));
-          });
-        const t = () => (scrollContainer.scrollWidth + 24) / 7;
-        setTimeout(() => {
-          scrollContainer.scrollLeft = 3 * t();
-        }, 50);
-        let n,
-          l = !0;
-        scrollContainer.addEventListener("scroll", () => {
-          if (!l) return;
-          const e = t();
-          e <= 24 ||
-            (scrollContainer.scrollLeft < 2 * e
-              ? (scrollContainer.scrollLeft += e)
-              : scrollContainer.scrollLeft > 4 * e &&
-                (scrollContainer.scrollLeft -= e));
-        });
-        let r = !0,
-          s = 0,
-          o = 0;
-        const i = 0.12,
-          c = (e) => {
-            o || (o = e);
-            const t = e - o;
-            ((o = e),
-              r &&
-                (Math.abs(scrollContainer.scrollLeft - Math.round(s)) > 5 &&
-                  (s = scrollContainer.scrollLeft),
-                (s += i * t),
-                (scrollContainer.scrollLeft = s)),
-              (n = requestAnimationFrame(c)));
-          },
-          a = () => {
-            n || ((o = 0), (n = requestAnimationFrame(c)));
-          },
-          d = () => {
-            n && (cancelAnimationFrame(n), (n = null));
-          };
-        (scrollPauseBtn.addEventListener("click", () => {
-          (r
-            ? (d(),
-              (scrollPauseBtn.innerHTML =
-                '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'))
-            : (a(),
-              (scrollPauseBtn.innerHTML =
-                '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>')),
-            (r = !r));
-        }),
-          a(),
-          scrollContainer.addEventListener("mouseenter", d),
-          scrollContainer.addEventListener("mouseleave", () => {
-            r && a();
-          }),
-          scrollContainer.addEventListener("filter-changed", (e) => {
-            ((l = "all" === e.detail.filter),
-              r &&
-                (d(),
-                (r = !1),
-                (scrollPauseBtn.innerHTML =
-                  '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>')),
-              l &&
-                setTimeout(() => {
-                  scrollContainer.scrollLeft = 3 * t();
-                }, 50));
-          }));
-      }
-      const mobileMenuBtn = document.getElementById("mobile-menu-btn"),
-        navLinks = document.getElementById("nav-links");
-      mobileMenuBtn &&
-        navLinks &&
-        (mobileMenuBtn.addEventListener("click", () => {
-          navLinks.classList.toggle("show");
-        }),
-        navLinks.querySelectorAll("a").forEach((e) => {
-          e.addEventListener("click", () => {
-            navLinks.classList.remove("show");
-          });
-        }));
-    </script>
-  </body>
+
+      row.append(name, desc, meta);
+      list.appendChild(row);
+    });
+    count.textContent = repos.length;
+  }
+
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b === btn));
+      document.querySelectorAll(".panel").forEach(p => p.hidden = p.id !== btn.dataset.target);
+    });
+  });
+  search.addEventListener("input", e => render(e.target.value));
+  render();
+</script>
+</body>
 </html>
