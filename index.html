@@ -3,174 +3,277 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Royal Sasanala Spoorthi</title>
+<title>royal@quantum:~ portfolio</title>
 <style>
   :root {
-    --paper:#fdfcf8; --ink:#1c1b19; --muted:#6b675f; --rule:#cfc9bd; --accent:#1f4e79; --shade:#f3f0e8;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --paper:#17161a; --ink:#ebe7de; --muted:#9d978a; --rule:#3a3733; --accent:#8fb4dc; --shade:#1f1e23; }
+    --bg:#0a0e14; --panel:#0f141c; --fg:#c9d1d9; --dim:#6e7681; --green:#7ee787; --cyan:#79c0ff; --amber:#ffa657; --violet:#d2a8ff; --line:#1f2937;
   }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--paper); color:var(--ink); font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; font-size:16px; line-height:1.6; }
+  html, body { height:100%; margin:0; }
+  body {
+    background: radial-gradient(1200px 600px at 80% -10%, #132033 0%, var(--bg) 60%);
+    color:var(--fg); font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size:14px; line-height:1.55;
+    display:flex; flex-direction:column;
+  }
+  .window { flex:1; max-width:980px; width:100%; margin:28px auto; background:var(--panel); border:1px solid var(--line); border-radius:12px; box-shadow:0 30px 80px rgba(0,0,0,.45); overflow:hidden; display:flex; flex-direction:column; }
+  .titlebar { display:flex; align-items:center; gap:8px; padding:10px 14px; border-bottom:1px solid var(--line); background:#0c1118; }
+  .dot { width:12px; height:12px; border-radius:50%; }
+  .title { margin-left:10px; color:var(--dim); font-size:12px; }
+  .body { display:grid; grid-template-columns: 1fr 200px; gap:0; flex:1; min-height:0; }
+  @media (max-width:760px) { .body { grid-template-columns:1fr; } .qubit { display:none; } }
 
-  .page { max-width:780px; margin:48px auto; padding:64px 72px; background:var(--paper); }
-  @media (max-width:820px) { .page { margin:0; padding:40px 24px; } }
+  .term { padding:18px 20px 12px; overflow-y:auto; max-height:72vh; }
+  .out { white-space:pre-wrap; word-break:break-word; margin:0 0 10px; }
+  .prompt { color:var(--green); }
+  .cmd { color:var(--fg); }
+  .hl { color:var(--cyan); }
+  .am { color:var(--amber); }
+  .vi { color:var(--violet); }
+  .dim { color:var(--dim); }
+  a { color:var(--cyan); text-decoration:none; border-bottom:1px dashed #30415a; }
+  a:hover { color:var(--amber); border-bottom-color:var(--amber); }
 
-  a { color:var(--accent); text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; }
-  a:hover { text-decoration-thickness:2px; }
+  .inputrow { display:flex; align-items:center; gap:8px; padding:10px 20px 16px; border-top:1px solid var(--line); background:#0c1118; }
+  .inputrow .prompt { white-space:nowrap; }
+  #input { flex:1; background:transparent; border:0; outline:0; color:var(--fg); font:inherit; caret-color:var(--green); }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; padding:0 20px 14px; background:#0c1118; }
+  .chips button { background:#0f1622; color:var(--dim); border:1px solid var(--line); border-radius:6px; padding:3px 9px; font:inherit; font-size:12px; cursor:pointer; }
+  .chips button:hover { color:var(--fg); border-color:#334155; }
 
-  header { text-align:center; border-bottom:2px solid var(--ink); padding-bottom:20px; margin-bottom:8px; }
-  h1 { font-size:36px; font-weight:700; letter-spacing:.02em; margin:0 0 6px; font-variant: small-caps; }
-  .title { font-style:italic; color:var(--muted); margin:0 0 14px; }
-  .contact { font-size:14px; color:var(--muted); display:flex; flex-wrap:wrap; justify-content:center; gap:4px 18px; }
-  .contact a { color:var(--muted); }
-
-  h2 { font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; border-bottom:1px solid var(--rule); padding-bottom:4px; margin:32px 0 16px; }
-
-  .summary { margin:0; text-align:justify; }
-
-  .item { margin-bottom:18px; }
-  .item-head { display:flex; justify-content:space-between; gap:16px; align-items:baseline; flex-wrap:wrap; }
-  .item-title { font-weight:700; margin:0; }
-  .item-date { font-style:italic; color:var(--muted); font-size:14px; white-space:nowrap; }
-  .item-sub { font-style:italic; color:var(--muted); margin:0; font-size:15px; }
-  .item ul { margin:6px 0 0; padding-left:20px; }
-  .item li { margin-bottom:3px; }
-  .item p { margin:6px 0 0; }
-  .stack { font-size:14px; color:var(--muted); margin:2px 0 0; }
-  .refs { font-size:14px; margin:6px 0 0; }
-  .refs span { color:var(--muted); }
-
-  .skills-grid { display:grid; grid-template-columns: 150px 1fr; gap:6px 16px; font-size:15px; }
-  .skills-grid dt { font-weight:700; }
-  .skills-grid dd { margin:0; }
-
-  .certs { margin:0; padding-left:20px; columns:2; column-gap:32px; font-size:15px; }
-  .certs li { margin-bottom:4px; break-inside:avoid; }
-
-  footer { margin-top:40px; padding-top:12px; border-top:1px solid var(--rule); text-align:center; font-size:13px; color:var(--muted); font-style:italic; }
-
-  @media (max-width:640px) { .certs { columns:1; } .skills-grid { grid-template-columns:1fr; } .item-head { flex-direction:column; gap:0; } }
-  @media print { body { background:#fff; } .page { margin:0; padding:0; } a { color:#000; } }
+  .qubit { border-left:1px solid var(--line); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; gap:10px; }
+  .qubit canvas { width:168px; height:168px; }
+  .qubit .cap { color:var(--dim); font-size:11px; text-align:center; line-height:1.4; }
 </style>
 </head>
 <body>
 
-<div class="page">
+<div class="window">
+  <div class="titlebar">
+    <span class="dot" style="background:#ff5f56"></span>
+    <span class="dot" style="background:#ffbd2e"></span>
+    <span class="dot" style="background:#27c93f"></span>
+    <span class="title">royal@quantum: ~/portfolio</span>
+  </div>
 
-  <header>
-    <h1>Royal Sasanala Spoorthi</h1>
-    <p class="title">B.Tech in Computer Science and Engineering, Minor in Quantum Technologies</p>
-    <div class="contact">
-      <a href="mailto:royalalearner@gmail.com">royalalearner@gmail.com</a>
-      <a href="tel:+919966800756">+91 99668 00756</a>
-      <a href="https://linkedin.com/in/royalsasanala">linkedin.com/in/royalsasanala</a>
-      <a href="https://github.com/royallearner">github.com/royallearner</a>
-      <span>Srikakulam, Andhra Pradesh, India</span>
+  <div class="body">
+    <div class="term" id="term">
     </div>
-  </header>
 
-  <h2>Summary</h2>
-  <p class="summary">I build full-stack web applications, multi-agent AI tools, and quantum circuits. Club executive and event organizer. Seeking internships in software engineering, AI, or quantum computing research.</p>
-
-  <h2>Projects</h2>
-
-  <div class="item">
-    <div class="item-head"><p class="item-title">StudyBud, Community Discussion Platform</p></div>
-    <p class="stack">Django &middot; PostgreSQL &middot; Cloudinary</p>
-    <p>A full-stack discussion platform with email-based authentication, live threaded conversations, and media uploads.</p>
-    <p class="refs"><a href="https://github.com/royallearner/STUDYBUD">GitHub</a></p>
+    <aside class="qubit">
+      <canvas id="bloch" width="336" height="336"></canvas>
+      <div class="cap">Live qubit state<br>(rotating Bloch sphere)</div>
+    </aside>
   </div>
 
-  <div class="item">
-    <div class="item-head"><p class="item-title">WT Drive, Web Technologies Learning Portal</p></div>
-    <p class="stack">Node.js &middot; Express.js &middot; SQLite &middot; Bootstrap</p>
-    <p>A browser-based coding portal where students write and test code directly, moving through units, topics, and questions with live feedback.</p>
-    <p class="refs"><a href="https://github.com/royallearner/WT_Drive">GitHub</a> &nbsp;&middot;&nbsp; <a href="https://wt-technologies-drive.onrender.com">Live demo</a></p>
+  <div class="chips" id="chips">
+    <button data-cmd="help">help</button>
+    <button data-cmd="about">about</button>
+    <button data-cmd="projects">projects</button>
+    <button data-cmd="experience">experience</button>
+    <button data-cmd="education">education</button>
+    <button data-cmd="skills">skills</button>
+    <button data-cmd="certs">certs</button>
+    <button data-cmd="contact">contact</button>
+    <button data-cmd="clear">clear</button>
   </div>
 
-  <div class="item">
-    <div class="item-head"><p class="item-title">Nexus Connect, AI Recruitment Platform</p></div>
-    <p class="stack">Gemini API &middot; Firebase &middot; SQL &middot; Django &middot; Prototype</p>
-    <p>A Smart India Hackathon 2025 recruitment platform with a gamified engagement system, using the Gemini API for resume parsing and career roadmap generation.</p>
-    <p class="refs"><a href="https://studio--studio-4823586813-52b84.us-central1.hosted.app/">Prototype</a></p>
+  <div class="inputrow">
+    <span class="prompt">royal@quantum:~$</span>
+    <input id="input" autocomplete="off" spellcheck="false" autofocus placeholder="type a command..." aria-label="Command">
   </div>
-
-  <div class="item">
-    <div class="item-head"><p class="item-title">I&amp;CO Club Website</p></div>
-    <p class="stack">HTML &middot; CSS &middot; JavaScript &middot; Django &middot; Google Sheets API</p>
-    <p>A responsive, mobile-first landing page for a college career club, with a contact form and Google Sheets integration for dynamic data.</p>
-    <p class="refs"><a href="https://github.com/royallearner/PORTAL">GitHub</a></p>
-  </div>
-
-  <h2>Experience</h2>
-
-  <div class="item">
-    <div class="item-head">
-      <p class="item-title">Promotions and Marketing Team Lead, Qiskit Fall Fest 2025</p>
-      <span class="item-date">October 2025</span>
-    </div>
-    <p class="item-sub">Student Volunteer, RGUKT AP</p>
-    <ul>
-      <li>Led promotions and marketing for the campus edition, which drew 18,000+ registrations out of 32,000 global registrations.</li>
-      <li>Streamlined workflow with the technical team on event platform requirements.</li>
-    </ul>
-  </div>
-
-  <div class="item">
-    <div class="item-head">
-      <p class="item-title">Executive Board Member, Internships and Career Opportunities Club</p>
-      <span class="item-date">April 2025 &ndash; Present</span>
-    </div>
-    <p class="item-sub">RGUKT Srikakulam</p>
-    <ul>
-      <li>Led a recruitment drive managing 50+ candidates through structured evaluation and onboarding.</li>
-      <li>Managed the Half Battery Stall at Udaan and ran the Innovation Hackathon at Eureka 2025.</li>
-    </ul>
-  </div>
-
-  <h2>Education</h2>
-
-  <div class="item">
-    <div class="item-head">
-      <p class="item-title">Rajiv Gandhi University of Knowledge and Technologies, Srikakulam</p>
-      <span class="item-date">June 2024 &ndash; June 2028</span>
-    </div>
-    <p class="item-sub">B.Tech in Computer Science and Engineering, Minor in Quantum Technologies &middot; CGPA 8.78</p>
-  </div>
-
-  <div class="item">
-    <div class="item-head">
-      <p class="item-title">Pre-University Course (Mathematics, Physics, Chemistry)</p>
-      <span class="item-date">July 2022 &ndash; May 2024</span>
-    </div>
-    <p class="item-sub">CGPA 9.40</p>
-  </div>
-
-  <h2>Skills</h2>
-  <dl class="skills-grid">
-    <dt>Languages</dt><dd>Python, C, SQL, JavaScript, HTML, CSS</dd>
-    <dt>Frameworks</dt><dd>Django, Django REST Framework, Streamlit, Pandas, NumPy</dd>
-    <dt>Tools</dt><dd>Git, GitHub, Render, Cloudinary, Figma, Claude Code, Google AI Studio, AntiGravity, Supabase, Qiskit</dd>
-  </dl>
-
-  <h2>Certifications and Achievements</h2>
-  <ul class="certs">
-    <li>First Runner-up, Synergy Robotics, Eureka 2025</li>
-    <li>Demonstrated Quantum Teleportation, RadhaSapthami Science Fair 2026</li>
-    <li><a href="https://www.credly.com/badges/aa65a4e0-da7a-49ed-8b8c-d27c4756b8fc">Basics of Quantum Information</a></li>
-    <li><a href="https://www.credly.com/badges/e28b002d-d249-4d7b-b7f8-9169c1cf6f65">Qiskit Global Summer School 2026: Quantum Fundamentals</a></li>
-    <li><a href="https://www.credly.com/badges/4112849e-29c3-41ca-ac27-e7b96da59c91/">AI Skills Fest 2026</a></li>
-    <li>Introduction to Quantum Computing: Quantum Algorithms and Qiskit, NPTEL</li>
-    <li><a href="https://verification.givemycertificate.com/v/c0e6e68c-57a2-4a5b-befa-71e8fe43b7c1">Summer Analytics 25</a></li>
-    <li><a href="https://media.geeksforgeeks.org/courses/certificates/3eb17a10a8641e172933022fa5363ab7.pdf">Python Skill Up, GeeksforGeeks</a></li>
-    <li>Python Bootcamp, LetsUpgrade, May 2024</li>
-  </ul>
-
-  <footer>Royal Sasanala Spoorthi</footer>
-
 </div>
+
+<script>
+  const out = document.getElementById("term");
+  const input = document.getElementById("input");
+
+  const commands = {
+    help: () => `Available commands:
+  <span class="am">about</span>        who I am
+  <span class="am">projects</span>     what I've built (open with <span class="am">open 1-4</span>)
+  <span class="am">experience</span>   leadership and volunteer work
+  <span class="am">education</span>    degrees and grades
+  <span class="am">skills</span>       languages, frameworks, tools
+  <span class="am">certs</span>        certifications and achievements
+  <span class="am">contact</span>      how to reach me
+  <span class="am">clear</span>        clear the screen`,
+
+    whoami: () => `<span class="hl">Royal Sasanala Spoorthi</span>
+B.Tech CSE student (Minor: Quantum Technologies). Full-stack, AI, and quantum computing.
+github  <a href="https://github.com/royallearner">github.com/royallearner</a>
+resume  <a href="resume.pdf" target="_blank" rel="noopener">download resume (PDF)</a>
+
+<span class="dim">Type</span> <span class="am">commands</span> <span class="dim">to explore. Try</span> <span class="am">projects</span> <span class="dim">or</span> <span class="am">help</span><span class="dim">.</span>`,
+
+    about: () => `I build full-stack web apps, multi-agent AI tools, and quantum circuits.
+Club executive and event organizer. Seeking internships in software engineering,
+AI, or quantum computing research.`,
+
+    projects: () => `<span class="hl">[1]</span> <span class="vi">StudyBud</span>, community discussion platform
+    Django, PostgreSQL, Cloudinary. Email auth, live threads, media uploads.
+    <a href="https://github.com/royallearner/STUDYBUD">github</a>
+
+<span class="hl">[2]</span> <span class="vi">WT Drive</span>, web technologies learning portal
+    Node.js, Express, SQLite, Bootstrap. Write and test code in the browser.
+    <a href="https://github.com/royallearner/WT_Drive">github</a> | <a href="https://wt-technologies-drive.onrender.com">live demo</a>
+
+<span class="hl">[3]</span> <span class="vi">Nexus Connect</span>, AI recruitment platform (prototype)
+    Gemini API, Firebase, SQL, Django. Resume parsing and career roadmaps.
+    <a href="https://studio--studio-4823586813-52b84.us-central1.hosted.app/">prototype</a>
+
+<span class="hl">[4]</span> <span class="vi">I&amp;CO Club Website</span>
+    HTML, CSS, JavaScript, Django, Google Sheets API. Mobile-first landing page.
+    <a href="https://github.com/royallearner/PORTAL">github</a>
+
+<span class="dim">Type</span> <span class="am">open 1</span> <span class="dim">(or 2, 3, 4) to jump to a project.</span>`,
+
+    experience: () => `<span class="vi">Promotions and Marketing Team Lead</span>, Qiskit Fall Fest 2025 <span class="dim">(Oct 2025)</span>
+  Led campus-edition promotions. 18,000+ registrations out of 32,000 global.
+
+<span class="vi">Executive Board Member</span>, Internships and Career Opportunities Club <span class="dim">(Apr 2025 - present)</span>
+  Ran a recruitment drive for 50+ candidates. Managed the Udaan stall and
+  the Innovation Hackathon at Eureka 2025.`,
+
+    education: () => `<span class="vi">RGUKT, Srikakulam</span>, B.Tech CSE (Minor: Quantum Technologies)
+  Jun 2024 - Jun 2028 <span class="dim">|</span> CGPA <span class="am">8.78</span>
+
+<span class="vi">Pre-University</span> (MPC)
+  Jul 2022 - May 2024 <span class="dim">|</span> CGPA <span class="am">9.40</span>`,
+
+    skills: () => `<span class="hl">languages</span>    Python, C, SQL, JavaScript, HTML, CSS
+<span class="hl">frameworks</span>   Django, DRF, Streamlit, Pandas, NumPy
+<span class="hl">tools</span>        Git, GitHub, Render, Cloudinary, Figma, Claude Code,
+             Google AI Studio, Supabase, Qiskit`,
+
+    certs: () => `First Runner-up, Synergy Robotics (Eureka 2025)
+Demonstrated Quantum Teleportation (RadhaSapthami Science Fair 2026)
+<a href="https://www.credly.com/badges/aa65a4e0-da7a-49ed-8b8c-d27c4756b8fc">Basics of Quantum Information</a> (Credly)
+<a href="https://www.credly.com/badges/e28b002d-d249-4d7b-b7f8-9169c1cf6f65">Qiskit Global Summer School 2026</a> (Credly)
+<a href="https://www.credly.com/badges/4112849e-29c3-41ca-ac27-e7b96da59c91/">AI Skills Fest 2026</a> (Credly)
+Introduction to Quantum Computing, NPTEL
+<a href="https://verification.givemycertificate.com/v/c0e6e68c-57a2-4a5b-befa-71e8fe43b7c1">Summer Analytics 25</a>
+<a href="https://media.geeksforgeeks.org/courses/certificates/3eb17a10a8641e172933022fa5363ab7.pdf">Python Skill Up, GeeksforGeeks</a>
+Python Bootcamp, LetsUpgrade (May 2024)`,
+
+    contact: () => `email     <a href="mailto:royalalearner@gmail.com">royalalearner@gmail.com</a>
+phone     +91 99668 00756
+linkedin  <a href="https://linkedin.com/in/royalsasanala">linkedin.com/in/royalsasanala</a>
+github    <a href="https://github.com/royallearner">github.com/royallearner</a>
+location  Srikakulam, Andhra Pradesh, India`
+  };
+
+  const projectLinks = {
+    "1": "https://github.com/royallearner/STUDYBUD",
+    "2": "https://github.com/royallearner/WT_Drive",
+    "3": "https://studio--studio-4823586813-52b84.us-central1.hosted.app/",
+    "4": "https://github.com/royallearner/PORTAL"
+  };
+
+  function echo(cmd) {
+    const p = document.createElement("pre");
+    p.className = "out";
+    p.innerHTML = `<span class="prompt">royal@quantum:~$</span> <span class="cmd"></span>`;
+    p.querySelector(".cmd").textContent = cmd;
+    out.appendChild(p);
+  }
+
+  function print(html) {
+    const p = document.createElement("pre");
+    p.className = "out";
+    p.innerHTML = html;
+    out.appendChild(p);
+    out.scrollTop = out.scrollHeight;
+  }
+
+  function run(raw) {
+    const cmd = raw.trim();
+    if (!cmd) return;
+    echo(cmd);
+    const [name, arg] = cmd.toLowerCase().split(/\s+/);
+
+    if (name === "clear") { out.innerHTML = ""; return; }
+
+    if (name === "open") {
+      const url = projectLinks[arg];
+      if (url) {
+        print(`opening <a href="${url}" target="_blank" rel="noopener">${url}</a> ...`);
+        window.open(url, "_blank", "noopener");
+      } else {
+        print(`<span class="am">usage:</span> open 1-4 (see <span class="am">projects</span>)`);
+      }
+      return;
+    }
+
+    if (commands[name]) { print(commands[name]()); return; }
+
+    print(`command not found: ${name}. Type <span class="am">help</span>.`);
+  }
+
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") { run(input.value); input.value = ""; }
+  });
+
+  document.querySelectorAll("#chips button").forEach(b => {
+    b.addEventListener("click", () => { run(b.dataset.cmd); input.focus(); });
+  });
+
+  // Rotating Bloch sphere: a qubit state precessing around the z-axis.
+  const canvas = document.getElementById("bloch");
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height, R = 120, cx = W / 2, cy = H / 2;
+  let t = 0;
+
+  function project(x, y, z, yaw, pitch) {
+    const cy1 = Math.cos(yaw), sy1 = Math.sin(yaw);
+    let x1 = x * cy1 - y * sy1, y1 = x * sy1 + y * cy1;
+    const cp = Math.cos(pitch), sp = Math.sin(pitch);
+    let y2 = y1 * cp - z * sp, z2 = y1 * sp + z * cp;
+    return { px: cx + x1 * R, py: cy - z2 * R, depth: y2 };
+  }
+
+  function drawCircle(fn, color, width, alpha) {
+    ctx.beginPath();
+    for (let i = 0; i <= 120; i++) {
+      const a = (i / 120) * Math.PI * 2;
+      const [x, y, z] = fn(a);
+      const p = project(x, y, z, t * 0.4, 0.35);
+      i === 0 ? ctx.moveTo(p.px, p.py) : ctx.lineTo(p.px, p.py);
+    }
+    ctx.strokeStyle = color; ctx.lineWidth = width; ctx.globalAlpha = alpha; ctx.stroke(); ctx.globalAlpha = 1;
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = "#1f2937"; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = "rgba(121,192,255,0.05)"; ctx.fill();
+
+    drawCircle(a => [Math.cos(a), Math.sin(a), 0], "#30415a", 1, 0.9);
+    drawCircle(a => [Math.cos(a), 0, Math.sin(a)], "#30415a", 1, 0.6);
+    drawCircle(a => [0, Math.cos(a), Math.sin(a)], "#30415a", 1, 0.6);
+
+    const theta = Math.PI / 3, phi = t * 1.2;
+    const x = Math.sin(theta) * Math.cos(phi), y = Math.sin(theta) * Math.sin(phi), z = Math.cos(theta);
+    const tip = project(x, y, z, t * 0.4, 0.35);
+    const zero = project(0, 0, 1, t * 0.4, 0.35);
+    const origin = project(0, 0, 0, t * 0.4, 0.35);
+
+    ctx.beginPath(); ctx.moveTo(origin.px, origin.py); ctx.lineTo(tip.px, tip.py);
+    ctx.strokeStyle = "#7ee787"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.beginPath(); ctx.arc(tip.px, tip.py, 5, 0, Math.PI * 2);
+    ctx.fillStyle = "#7ee787"; ctx.fill();
+
+    ctx.fillStyle = "#6e7681"; ctx.font = "11px ui-monospace, monospace";
+    ctx.fillText("|0>", zero.px + 6, zero.py - 4);
+
+    t += 0.02;
+    requestAnimationFrame(frame);
+  }
+  frame();
+
+  // Run whoami on load so the first screen shows the intro.
+  run("whoami");
+</script>
 
 </body>
 </html>
