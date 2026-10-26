@@ -3,271 +3,174 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Royal Sasanala Spoorthi (royallearner)</title>
+<title>Royal Sasanala Spoorthi</title>
 <style>
   :root {
-    --fg:#1f2328; --muted:#59636e; --link:#0969da; --border:#d1d9e0; --border-soft:#d1d9e0b3;
-    --bg:#ffffff; --bg-subtle:#f6f8fa; --header:#25292e; --tab-active:#fd8c73;
+    --paper:#fdfcf8; --ink:#1c1b19; --muted:#6b675f; --rule:#cfc9bd; --accent:#1f4e79; --shade:#f3f0e8;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --fg:#f0f6fc; --muted:#9198a1; --link:#4493f8; --border:#3d444d; --border-soft:#3d444db3;
-      --bg:#0d1117; --bg-subtle:#161b22; --header:#010409; --tab-active:#f78166;
-    }
+    :root { --paper:#17161a; --ink:#ebe7de; --muted:#9d978a; --rule:#3a3733; --accent:#8fb4dc; --shade:#1f1e23; }
   }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size:14px; color:var(--fg); background:var(--bg); line-height:1.5; }
-  a { color: var(--link); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; font-size:16px; line-height:1.6; }
 
-  /* top bar */
-  .topbar { background: var(--header); color:#f0f6fc; padding: 12px 24px; display:flex; align-items:center; gap:12px; }
-  .topbar .brand { font-weight:600; color:#f0f6fc; }
-  .topbar .sep { color:#9198a1; }
-  .topbar .crumb { color:#9198a1; }
+  .page { max-width:780px; margin:48px auto; padding:64px 72px; background:var(--paper); }
+  @media (max-width:820px) { .page { margin:0; padding:40px 24px; } }
 
-  /* tabs */
-  .tabs { background: var(--bg-subtle); border-bottom:1px solid var(--border); padding: 0 24px; }
-  .tabs-inner { max-width:1280px; margin:0 auto; display:flex; gap:4px; }
-  .tab { background:none; border:0; border-bottom:2px solid transparent; padding:12px 14px; color:var(--fg); font:inherit; cursor:pointer; }
-  .tab.active { border-bottom-color: var(--tab-active); font-weight:600; }
-  .tab .count { background: var(--border); border-radius:999px; padding:0 7px; font-size:12px; margin-left:4px; color:var(--fg); }
+  a { color:var(--accent); text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; }
+  a:hover { text-decoration-thickness:2px; }
 
-  .layout { max-width:1280px; margin:24px auto; padding:0 24px; display:grid; grid-template-columns: 296px 1fr; gap:32px; }
+  header { text-align:center; border-bottom:2px solid var(--ink); padding-bottom:20px; margin-bottom:8px; }
+  h1 { font-size:36px; font-weight:700; letter-spacing:.02em; margin:0 0 6px; font-variant: small-caps; }
+  .title { font-style:italic; color:var(--muted); margin:0 0 14px; }
+  .contact { font-size:14px; color:var(--muted); display:flex; flex-wrap:wrap; justify-content:center; gap:4px 18px; }
+  .contact a { color:var(--muted); }
 
-  /* sidebar */
-  .avatar { width:296px; height:296px; max-width:100%; border-radius:50%; background: linear-gradient(135deg,#2b5fd9,#7aa2ff); color:#fff; display:flex; align-items:center; justify-content:center; font-size:96px; font-weight:600; margin-bottom:16px; }
-  @media (max-width: 800px) { .avatar { width:140px; height:140px; font-size:48px; } }
-  .name { font-size:24px; font-weight:600; line-height:1.25; margin:0; }
-  .username { color:var(--muted); font-size:20px; font-weight:300; margin:0 0 16px; }
-  .bio { margin:0 0 16px; }
-  .side-item { color:var(--fg); margin:6px 0; display:flex; gap:8px; align-items:center; }
-  .side-item .ico { width:16px; text-align:center; color:var(--muted); }
-  .side-divider { border:0; border-top:1px solid var(--border-soft); margin:16px 0; }
-  .side-h { font-weight:600; font-size:14px; margin:0 0 8px; }
-  .chips { display:flex; flex-wrap:wrap; gap:6px; }
-  .chip { background:var(--bg-subtle); border:1px solid var(--border); border-radius:2em; padding:2px 10px; font-size:12px; color:var(--fg); }
+  h2 { font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; border-bottom:1px solid var(--rule); padding-bottom:4px; margin:32px 0 16px; }
 
-  /* main */
-  .section-title { font-size:20px; font-weight:600; margin:0 0 16px; }
-  .pinned { display:grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap:16px; margin-bottom:32px; }
-  .pin { border:1px solid var(--border); border-radius:6px; padding:16px; background:var(--bg); }
-  .pin-title { font-weight:600; color:var(--link); margin:0 0 6px; font-size:14px; }
-  .pin p { color:var(--muted); margin:0 0 12px; font-size:12px; }
-  .meta-row { display:flex; gap:16px; font-size:12px; color:var(--muted); align-items:center; }
-  .lang { display:inline-flex; align-items:center; gap:6px; }
-  .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+  .summary { margin:0; text-align:justify; }
 
-  .card-list { border:1px solid var(--border); border-radius:6px; }
-  .entry { padding:16px 20px; border-top:1px solid var(--border); }
-  .entry:first-child { border-top:0; }
-  .entry-title { font-weight:600; margin:0 0 2px; font-size:16px; }
-  .entry-sub { color:var(--muted); font-size:13px; margin:0 0 6px; }
-  .entry ul { margin:6px 0 0; padding-left:20px; color:var(--fg); }
-  .entry li { margin-bottom:4px; }
+  .item { margin-bottom:18px; }
+  .item-head { display:flex; justify-content:space-between; gap:16px; align-items:baseline; flex-wrap:wrap; }
+  .item-title { font-weight:700; margin:0; }
+  .item-date { font-style:italic; color:var(--muted); font-size:14px; white-space:nowrap; }
+  .item-sub { font-style:italic; color:var(--muted); margin:0; font-size:15px; }
+  .item ul { margin:6px 0 0; padding-left:20px; }
+  .item li { margin-bottom:3px; }
+  .item p { margin:6px 0 0; }
+  .stack { font-size:14px; color:var(--muted); margin:2px 0 0; }
+  .refs { font-size:14px; margin:6px 0 0; }
+  .refs span { color:var(--muted); }
 
-  .repo-toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; gap:12px; flex-wrap:wrap; }
-  .search { border:1px solid var(--border); background:var(--bg-subtle); border-radius:6px; padding:5px 12px; color:var(--muted); min-width:260px; font:inherit; }
-  .repo { padding:16px 0; border-top:1px solid var(--border); }
-  .repo:first-child { border-top:0; padding-top:0; }
-  .repo-name { font-weight:600; font-size:16px; }
-  .repo-desc { color:var(--muted); margin:4px 0 8px; }
-  .empty { color:var(--muted); font-style:italic; padding:24px 0; border:1px dashed var(--border); border-radius:6px; text-align:center; }
+  .skills-grid { display:grid; grid-template-columns: 150px 1fr; gap:6px 16px; font-size:15px; }
+  .skills-grid dt { font-weight:700; }
+  .skills-grid dd { margin:0; }
 
-  footer { border-top:1px solid var(--border); margin-top:40px; padding:24px; text-align:center; color:var(--muted); font-size:12px; }
+  .certs { margin:0; padding-left:20px; columns:2; column-gap:32px; font-size:15px; }
+  .certs li { margin-bottom:4px; break-inside:avoid; }
 
-  .panel[hidden] { display:none; }
+  footer { margin-top:40px; padding-top:12px; border-top:1px solid var(--rule); text-align:center; font-size:13px; color:var(--muted); font-style:italic; }
 
-  @media (max-width: 800px) {
-    .layout { grid-template-columns: 1fr; }
-  }
+  @media (max-width:640px) { .certs { columns:1; } .skills-grid { grid-template-columns:1fr; } .item-head { flex-direction:column; gap:0; } }
+  @media print { body { background:#fff; } .page { margin:0; padding:0; } a { color:#000; } }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <span class="brand">Royal Sasanala Spoorthi</span>
-  <span class="sep">/</span>
-  <span class="crumb">portfolio</span>
-</div>
+<div class="page">
 
-<nav class="tabs">
-  <div class="tabs-inner">
-    <button class="tab active" data-target="overview">Overview</button>
-    <button class="tab" data-target="repos">Repositories <span class="count" id="repo-count">0</span></button>
-  </div>
-</nav>
-
-<div class="layout">
-
-  <aside>
-    <div class="avatar">RS</div>
-    <h1 class="name">Royal Sasanala Spoorthi</h1>
-    <p class="username">royallearner</p>
-    <p class="bio">B.Tech CSE student (Minor: Quantum Technologies). Full-stack, AI, and quantum computing.</p>
-    <div class="side-item"><span class="ico">&#9873;</span> Srikakulam, Andhra Pradesh, India</div>
-    <div class="side-item"><span class="ico">&#9993;</span> <a href="mailto:royalalearner@gmail.com">royalalearner@gmail.com</a></div>
-    <div class="side-item"><span class="ico">&#9742;</span> +91-9966800756</div>
-    <div class="side-item"><span class="ico">in</span> <a href="https://linkedin.com/in/royalsasanala">linkedin.com/in/royalsasanala</a></div>
-    <div class="side-item"><span class="ico">&#9671;</span> <a href="https://github.com/royallearner">github.com/royallearner</a></div>
-    <hr class="side-divider">
-    <p class="side-h">Skills</p>
-    <div class="chips">
-      <span class="chip">Python</span><span class="chip">C</span><span class="chip">SQL</span><span class="chip">JavaScript</span><span class="chip">HTML</span><span class="chip">CSS</span>
-      <span class="chip">Django</span><span class="chip">DRF</span><span class="chip">Streamlit</span><span class="chip">Pandas</span><span class="chip">NumPy</span>
-      <span class="chip">Git</span><span class="chip">Render</span><span class="chip">Cloudinary</span><span class="chip">Figma</span><span class="chip">Supabase</span><span class="chip">Qiskit</span>
+  <header>
+    <h1>Royal Sasanala Spoorthi</h1>
+    <p class="title">B.Tech in Computer Science and Engineering, Minor in Quantum Technologies</p>
+    <div class="contact">
+      <a href="mailto:royalalearner@gmail.com">royalalearner@gmail.com</a>
+      <a href="tel:+919966800756">+91 99668 00756</a>
+      <a href="https://linkedin.com/in/royalsasanala">linkedin.com/in/royalsasanala</a>
+      <a href="https://github.com/royallearner">github.com/royallearner</a>
+      <span>Srikakulam, Andhra Pradesh, India</span>
     </div>
-  </aside>
+  </header>
 
-  <main>
+  <h2>Summary</h2>
+  <p class="summary">I build full-stack web applications, multi-agent AI tools, and quantum circuits. Club executive and event organizer. Seeking internships in software engineering, AI, or quantum computing research.</p>
 
-    <section class="panel" id="overview">
-      <h2 class="section-title">Pinned</h2>
-      <div class="pinned">
-        <div class="pin">
-          <p class="pin-title">StudyBud</p>
-          <p>Community discussion platform with email auth, live threads, and media uploads.</p>
-          <div class="meta-row"><span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span><span>Django</span><span>PostgreSQL</span></div>
-        </div>
-        <div class="pin">
-          <p class="pin-title">WT Drive</p>
-          <p>Browser-based coding practice portal for Web Technologies with live feedback.</p>
-          <div class="meta-row"><span class="lang"><span class="dot" style="background:#f1e05a"></span>JavaScript</span><span>Express.js</span><span>SQLite</span></div>
-        </div>
-        <div class="pin">
-          <p class="pin-title">Nexus Connect</p>
-          <p>AI recruitment prototype with Gemini-powered resume parsing and career roadmaps.</p>
-          <div class="meta-row"><span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span><span>Gemini API</span><span>Firebase</span></div>
-        </div>
-        <div class="pin">
-          <p class="pin-title">I&amp;CO Club Website</p>
-          <p>Responsive, mobile-first club landing page with Google Sheets API integration.</p>
-          <div class="meta-row"><span class="lang"><span class="dot" style="background:#f1e05a"></span>JavaScript</span><span>Django</span><span>Sheets API</span></div>
-        </div>
-      </div>
+  <h2>Projects</h2>
 
-      <h2 class="section-title">Experience</h2>
-      <div class="card-list">
-        <div class="entry">
-          <p class="entry-title">Promotions and Marketing Team Lead, RGUKT AP Qiskit Fall Fest 2025</p>
-          <p class="entry-sub">Student Volunteer | October 2025</p>
-          <ul>
-            <li>Led promotions and marketing for the campus edition. The college event drew 18,000+ registrations out of 32,000 global registrations.</li>
-            <li>Streamlined workflow with the technical team on event platform requirements.</li>
-          </ul>
-        </div>
-        <div class="entry">
-          <p class="entry-title">Executive Board Member, Internships and Career Opportunities (I&amp;CO) Club</p>
-          <p class="entry-sub">RGUKT Srikakulam | April 2025 - Present</p>
-          <ul>
-            <li>Led a recruitment drive managing 50+ candidates through structured evaluation and onboarding.</li>
-            <li>Managed the Half Battery Stall at Udaan and ran the Innovation Hackathon at Eureka 2025.</li>
-          </ul>
-        </div>
-      </div>
+  <div class="item">
+    <div class="item-head"><p class="item-title">StudyBud, Community Discussion Platform</p></div>
+    <p class="stack">Django &middot; PostgreSQL &middot; Cloudinary</p>
+    <p>A full-stack discussion platform with email-based authentication, live threaded conversations, and media uploads.</p>
+    <p class="refs"><a href="https://github.com/royallearner/STUDYBUD">GitHub</a></p>
+  </div>
 
-      <h2 class="section-title" style="margin-top:32px">Education</h2>
-      <div class="card-list">
-        <div class="entry">
-          <p class="entry-title">Rajiv Gandhi University of Knowledge and Technologies (RGUKT), Srikakulam</p>
-          <p class="entry-sub">B.Tech in Computer Science and Engineering, Minor in Quantum Technologies | June 2024 - June 2028 | CGPA 8.78</p>
-        </div>
-        <div class="entry">
-          <p class="entry-title">Pre-University Course (Mathematics, Physics, Chemistry)</p>
-          <p class="entry-sub">July 2022 - May 2024 | CGPA 9.40</p>
-        </div>
-      </div>
+  <div class="item">
+    <div class="item-head"><p class="item-title">WT Drive, Web Technologies Learning Portal</p></div>
+    <p class="stack">Node.js &middot; Express.js &middot; SQLite &middot; Bootstrap</p>
+    <p>A browser-based coding portal where students write and test code directly, moving through units, topics, and questions with live feedback.</p>
+    <p class="refs"><a href="https://github.com/royallearner/WT_Drive">GitHub</a> &nbsp;&middot;&nbsp; <a href="https://wt-technologies-drive.onrender.com">Live demo</a></p>
+  </div>
 
-      <h2 class="section-title" style="margin-top:32px">Achievements and Certifications</h2>
-      <div class="card-list">
-        <div class="entry"><ul>
-          <li>First Runner-up, Synergy Robotics, Eureka 2025</li>
-          <li>Demonstrated Quantum Teleportation at RadhaSapthami Science Fair 2026</li>
-          <li>Basics of Quantum Information (Credly)</li>
-          <li>Qiskit Global Summer School 2026: Quantum Fundamentals (Credly)</li>
-          <li>Introduction to Quantum Computing: Quantum Algorithms and Qiskit (NPTEL)</li>
-          <li>AI Skills Fest 2026 (Credly)</li>
-          <li>Summer Analytics 25 (Verify)</li>
-          <li>Python Skill Up, GeeksforGeeks (Verify)</li>
-          <li>Python Bootcamp, LetsUpgrade, May 2024</li>
-        </ul></div>
-      </div>
-    </section>
+  <div class="item">
+    <div class="item-head"><p class="item-title">Nexus Connect, AI Recruitment Platform</p></div>
+    <p class="stack">Gemini API &middot; Firebase &middot; SQL &middot; Django &middot; Prototype</p>
+    <p>A Smart India Hackathon 2025 recruitment platform with a gamified engagement system, using the Gemini API for resume parsing and career roadmap generation.</p>
+    <p class="refs"><a href="https://studio--studio-4823586813-52b84.us-central1.hosted.app/">Prototype</a></p>
+  </div>
 
-    <section class="panel" id="repos" hidden>
-      <div class="repo-toolbar">
-        <input class="search" type="search" placeholder="Find a repository..." id="repo-search" aria-label="Find a repository">
-      </div>
-      <div class="card-list" id="repo-list"></div>
-    </section>
+  <div class="item">
+    <div class="item-head"><p class="item-title">I&amp;CO Club Website</p></div>
+    <p class="stack">HTML &middot; CSS &middot; JavaScript &middot; Django &middot; Google Sheets API</p>
+    <p>A responsive, mobile-first landing page for a college career club, with a contact form and Google Sheets integration for dynamic data.</p>
+    <p class="refs"><a href="https://github.com/royallearner/PORTAL">GitHub</a></p>
+  </div>
 
-  </main>
+  <h2>Experience</h2>
+
+  <div class="item">
+    <div class="item-head">
+      <p class="item-title">Promotions and Marketing Team Lead, Qiskit Fall Fest 2025</p>
+      <span class="item-date">October 2025</span>
+    </div>
+    <p class="item-sub">Student Volunteer, RGUKT AP</p>
+    <ul>
+      <li>Led promotions and marketing for the campus edition, which drew 18,000+ registrations out of 32,000 global registrations.</li>
+      <li>Streamlined workflow with the technical team on event platform requirements.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-head">
+      <p class="item-title">Executive Board Member, Internships and Career Opportunities Club</p>
+      <span class="item-date">April 2025 &ndash; Present</span>
+    </div>
+    <p class="item-sub">RGUKT Srikakulam</p>
+    <ul>
+      <li>Led a recruitment drive managing 50+ candidates through structured evaluation and onboarding.</li>
+      <li>Managed the Half Battery Stall at Udaan and ran the Innovation Hackathon at Eureka 2025.</li>
+    </ul>
+  </div>
+
+  <h2>Education</h2>
+
+  <div class="item">
+    <div class="item-head">
+      <p class="item-title">Rajiv Gandhi University of Knowledge and Technologies, Srikakulam</p>
+      <span class="item-date">June 2024 &ndash; June 2028</span>
+    </div>
+    <p class="item-sub">B.Tech in Computer Science and Engineering, Minor in Quantum Technologies &middot; CGPA 8.78</p>
+  </div>
+
+  <div class="item">
+    <div class="item-head">
+      <p class="item-title">Pre-University Course (Mathematics, Physics, Chemistry)</p>
+      <span class="item-date">July 2022 &ndash; May 2024</span>
+    </div>
+    <p class="item-sub">CGPA 9.40</p>
+  </div>
+
+  <h2>Skills</h2>
+  <dl class="skills-grid">
+    <dt>Languages</dt><dd>Python, C, SQL, JavaScript, HTML, CSS</dd>
+    <dt>Frameworks</dt><dd>Django, Django REST Framework, Streamlit, Pandas, NumPy</dd>
+    <dt>Tools</dt><dd>Git, GitHub, Render, Cloudinary, Figma, Claude Code, Google AI Studio, AntiGravity, Supabase, Qiskit</dd>
+  </dl>
+
+  <h2>Certifications and Achievements</h2>
+  <ul class="certs">
+    <li>First Runner-up, Synergy Robotics, Eureka 2025</li>
+    <li>Demonstrated Quantum Teleportation, RadhaSapthami Science Fair 2026</li>
+    <li><a href="https://www.credly.com/badges/aa65a4e0-da7a-49ed-8b8c-d27c4756b8fc">Basics of Quantum Information</a></li>
+    <li><a href="https://www.credly.com/badges/e28b002d-d249-4d7b-b7f8-9169c1cf6f65">Qiskit Global Summer School 2026: Quantum Fundamentals</a></li>
+    <li><a href="https://www.credly.com/badges/4112849e-29c3-41ca-ac27-e7b96da59c91/">AI Skills Fest 2026</a></li>
+    <li>Introduction to Quantum Computing: Quantum Algorithms and Qiskit, NPTEL</li>
+    <li><a href="https://verification.givemycertificate.com/v/c0e6e68c-57a2-4a5b-befa-71e8fe43b7c1">Summer Analytics 25</a></li>
+    <li><a href="https://media.geeksforgeeks.org/courses/certificates/3eb17a10a8641e172933022fa5363ab7.pdf">Python Skill Up, GeeksforGeeks</a></li>
+    <li>Python Bootcamp, LetsUpgrade, May 2024</li>
+  </ul>
+
+  <footer>Royal Sasanala Spoorthi</footer>
+
 </div>
 
-<footer>Royal Sasanala Spoorthi | royallearner</footer>
-
-<script>
-  // TODO: add your repositories as { name, description, url, language, languageColor } from
-  // https://github.com/royallearner?tab=repositories
-  const repos = [
-    // { name: "repo-name", description: "What it does", url: "https://github.com/royallearner/repo-name", language: "Python", languageColor: "#3572A5" },
-  ];
-
-  const list = document.getElementById("repo-list");
-  const count = document.getElementById("repo-count");
-  const search = document.getElementById("repo-search");
-
-  function render(filter = "") {
-    list.innerHTML = "";
-    const q = filter.trim().toLowerCase();
-    const shown = repos.filter(r => !q || r.name.toLowerCase().includes(q) || (r.description || "").toLowerCase().includes(q));
-    if (repos.length === 0) {
-      list.innerHTML = '<div class="empty">Repositories will appear here.</div>';
-    } else if (shown.length === 0) {
-      list.innerHTML = '<div class="empty">No repositories match your search.</div>';
-    }
-    shown.forEach(r => {
-      const row = document.createElement("div");
-      row.className = "repo";
-      row.style.padding = "16px 20px";
-
-      const name = document.createElement("a");
-      name.className = "repo-name";
-      name.href = r.url;
-      name.target = "_blank";
-      name.rel = "noopener";
-      name.textContent = r.name;
-
-      const desc = document.createElement("p");
-      desc.className = "repo-desc";
-      desc.textContent = r.description || "";
-
-      const meta = document.createElement("div");
-      meta.className = "meta-row";
-      if (r.language) {
-        const lang = document.createElement("span");
-        lang.className = "lang";
-        const dot = document.createElement("span");
-        dot.className = "dot";
-        dot.style.background = r.languageColor || "#8b949e";
-        lang.append(dot, r.language);
-        meta.appendChild(lang);
-      }
-
-      row.append(name, desc, meta);
-      list.appendChild(row);
-    });
-    count.textContent = repos.length;
-  }
-
-  document.querySelectorAll(".tab").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b === btn));
-      document.querySelectorAll(".panel").forEach(p => p.hidden = p.id !== btn.dataset.target);
-    });
-  });
-  search.addEventListener("input", e => render(e.target.value));
-  render();
-</script>
 </body>
 </html>
